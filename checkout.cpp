@@ -52,8 +52,10 @@ void Cart::display(const Inventory& inventory) const {
 
         const Product& product = inventory.at(index);
         double subtotal = product.price * node->quantity;
-        cout << product.name << " x " << node->quantity << " = P"
-                  << fixed << setprecision(2) << subtotal << "\n";
+        cout << Inventory::colorCodeForBrand(product.brand)
+             << product.name << " x " << node->quantity << " = P"
+             << fixed << setprecision(2) << subtotal
+             << Inventory::colorResetCode() << "\n";
         total += subtotal;
     }
     cout << "Cart total: P" << fixed << setprecision(2) << total << "\n";
@@ -99,9 +101,11 @@ bool Cart::checkout(Inventory& inventory, queue<CartNode*>& checkoutQueue) {
         product.stockQuantity -= order->quantity;
         total += subtotal;
 
-        cout << "Processed: " << product.name << " x " << order->quantity
-                  << " = P" << fixed << setprecision(2) << subtotal
-                  << " | Remaining stock: " << product.stockQuantity << "\n";
+        cout << "Processed: " << Inventory::colorCodeForBrand(product.brand)
+             << product.name << " x " << order->quantity
+             << " = P" << fixed << setprecision(2) << subtotal
+             << " | Remaining stock: " << product.stockQuantity
+             << Inventory::colorResetCode() << "\n";
         delete order;
     }
 

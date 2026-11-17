@@ -54,7 +54,11 @@ void seedInventory(Inventory& inventory, BrandCircle& brands, ProductBST& bst) {
         {1005, "Core i5 12400F", "Processor", "Intel", 7899.00, 7},
         {1006, "Core i7 12700K", "Processor", "Intel", 14999.00, 4},
         {1007, "G102 Lightsync", "Peripherals", "Logitech", 1199.00, 20},
-        {1008, "G Pro Headset", "Audio", "Logitech", 4999.00, 6}
+        {1008, "G Pro Headset", "Headset", "Logitech", 4999.00, 6},
+        {1009, "Starfield II", "IEM", "Moondrop", 7499.00, 6},
+        {1010, "Moondrop x Crinacle DUSK", "IEM", "Moondrop", 19999.00, 3},
+        {1011, "Kasier", "IEM", "Tanchjim", 12999.00, 4},
+        {1012, "Space Pro Snowy Blossom", "DAC", "Tanchjim", 6999.00, 5}
     };
 
     for (const Product& product : sample) {
@@ -66,11 +70,13 @@ void seedInventory(Inventory& inventory, BrandCircle& brands, ProductBST& bst) {
     brands.add("AMD");
     brands.add("Intel");
     brands.add("Logitech");
+    brands.add("Moondrop");
+    brands.add("Tanchjim");
 }
 
 void filterByBrand(const Inventory& inventory) {
     string brand;
-    cout << "Enter brand (ASUS, AMD, Intel, Logitech): ";
+    cout << "Enter brand (ASUS, AMD, Intel, Logitech, Moondrop, Tanchjim): ";
     readLineAfterNumber(brand);
     string wanted = lowerText(brand);
     bool found = false;
@@ -156,9 +162,12 @@ int main() {
 
     seedInventory(inventory, brands, productTree);
 
+    const string menuDivider(64, '=');
     bool running = true;
     while (running) {
-        cout << "\nTECH & ELECTRONICS STORE\n"
+        cout << "\n" << menuDivider << "\n"
+             << "GEEKED OUT STORE 🤟\n"
+             << menuDivider << "\n"
              << "1. View Complete Catalog\n"
              << "2. Filter Products by Brand\n"
              << "3. Search Products by Keyword\n"
@@ -171,7 +180,8 @@ int main() {
              << "10. Search Product by ID (BST + Binary Search)\n"
              << "11. Admin: Restock Product\n"
              << "12. View Shopping Cart\n"
-             << "0. Exit\n";
+             << "0. Exit\n"
+             << menuDivider << "\n";
 
         int choice = readInt("Select an option: ");
 
@@ -261,6 +271,6 @@ int main() {
         checkoutQueue.pop();
     }
 
-    cout << "\nThank you for visiting Tech & Electronics Store!\n";
+    cout << "\nThank you for visiting Geeked Out Store!\n";
     return 0;
 }

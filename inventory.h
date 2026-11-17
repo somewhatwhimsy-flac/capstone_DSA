@@ -37,6 +37,8 @@ public:
 
     static void printHeader();
     static void printProduct(const Product& product);
+    static const char* colorCodeForBrand(const string& brand);
+    static const char* colorResetCode();
 
     void sortByPriceDescending();
     void binarySearchId(int target) const;

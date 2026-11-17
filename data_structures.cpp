@@ -1,4 +1,5 @@
 #include "data_structures.h"
+#include "inventory.h"
 #include <iostream>
 
 using namespace std;
@@ -39,7 +40,8 @@ void BrandCircle::showTwoRounds() const {
     } while (temp != tail->next);
 
     for (int i = 0; i < total * 2; ++i) {
-        cout << current->brand;
+        cout << Inventory::colorCodeForBrand(current->brand)
+             << current->brand << Inventory::colorResetCode();
         if ((i + 1) % total == 0) cout << "  | end of round";
         cout << "\n";
         current = current->next;

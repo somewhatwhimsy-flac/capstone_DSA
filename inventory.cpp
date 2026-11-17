@@ -1,5 +1,6 @@
 #include "inventory.h"
 #include <algorithm>
+#include <cctype>
 #include <iomanip>
 #include <iostream>
 
@@ -60,19 +61,39 @@ void Inventory::display() const {
 
 void Inventory::printHeader() {
     cout << "\n" << left << setw(6) << "ID"
-              << setw(25) << "Product" << setw(18) << "Category"
+              << setw(32) << "Product" << setw(18) << "Category"
               << setw(14) << "Brand" << right << setw(12) << "Price"
               << setw(10) << "Stock" << "\n";
-    cout << string(85, '-') << "\n";
+    cout << string(92, '-') << "\n";
+}
+
+const char* Inventory::colorCodeForBrand(const string& brand) {
+    string normalizedBrand = brand;
+    transform(normalizedBrand.begin(), normalizedBrand.end(), normalizedBrand.begin(),
+              [](unsigned char c) { return static_cast<char>(tolower(c)); });
+
+    if (normalizedBrand == "amd") return "\033[31m";
+    if (normalizedBrand == "intel") return "\033[34m";
+    if (normalizedBrand == "asus") return "\033[33m";
+    if (normalizedBrand == "logitech") return "\033[37m";
+    if (normalizedBrand == "moondrop") return "\033[95m";
+    if (normalizedBrand == "tanchjim") return "\033[96m";
+    return "\033[0m";
+}
+
+const char* Inventory::colorResetCode() {
+    return "\033[0m";
 }
 
 void Inventory::printProduct(const Product& product) {
-    cout << left << setw(6) << product.id
-              << setw(25) << product.name.substr(0, 24)
-              << setw(18) << product.category.substr(0, 17)
-              << setw(14) << product.brand.substr(0, 13)
-              << right << setw(12) << fixed << setprecision(2)
-              << product.price << setw(10) << product.stockQuantity << "\n";
+    cout << colorCodeForBrand(product.brand)
+         << left << setw(6) << product.id
+         << setw(25) << product.name.substr(0, 31)
+         << setw(18) << product.category.substr(0, 17)
+         << setw(14) << product.brand.substr(0, 13)
+         << right << setw(12) << fixed << setprecision(2)
+         << product.price << setw(10) << product.stockQuantity
+         << colorResetCode() << "\n";
 }
 
 void Inventory::sortByPriceDescending() {
